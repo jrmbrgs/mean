@@ -2,7 +2,7 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="mean101">
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
@@ -20,12 +20,14 @@
 
 	<!-- SPELLS -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
-	<script src="core.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="ng/ctrls/main.js"></script>
+	<script src="ng/srvs/todo.js"></script>
+	<script src="ng/core.js"></script>
 
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
-<body ng-controller="todo_ctrl">
+<body ng-controller="main_ctrl">
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
@@ -40,7 +42,7 @@
 				<!-- LOOP OVER THE TODOS IN $scope.todos -->
 				<div class="checkbox" ng-repeat="todo in todos">
 					<label>
-						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.what }}
+						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.what }} ({{todo._id}})
 					</label>
 				</div>
 

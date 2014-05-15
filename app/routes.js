@@ -1,5 +1,6 @@
 /// Models
 var winston=    require('winston');
+require('./dbals/mongoose');
 var todo_md = require('./models/todo');
 
 module.exports = function(app) {
@@ -30,15 +31,15 @@ module.exports = function(app) {
         	});
         });
     });
-    app.delete('/api/todos/:todo_id', function(req, res) {
+    app.delete('/api/todo/:todo_id', function(req, res) {
         winston.log('info', 'Remove todo : ' + req.params.todo_id);
-        todo_m.remove({
+        todo_md.remove({
         	_id : req.params.todo_id
         }, function(err, todo){
         	if(err){
         		res.send(err);
             }
-        	todo_m.find(function(err, todos){
+        	todo_md.find(function(err, todos){
         		if(err){
         			res.send(err);
                 }
@@ -48,6 +49,6 @@ module.exports = function(app) {
     });
 
     app.get('*', function(req, res) {
-		res.sendfile('./statics/index.html');
+		res.sendfile('./www/index.html');
     });
 }
