@@ -1,0 +1,12 @@
+{
+    "name": "mean",
+    "version": "0.1.0",
+    "dependencies": {
+        "express":  "latest",
+        "ejs":      "latest",
+        "mongoose": "latest",
+        "winston":  "latest"
+    },
+    "author": "JB jeromebourgeais.pro@gmail.com",
+    "description": "Simple Mean stack"
+}
