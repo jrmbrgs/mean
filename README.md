@@ -1,20 +1,18 @@
-# Bootstrap vagrant project for Node.js / MongoDB apps
+# MEAN Vagrant
+## MongoDB, Express, AngularJS and NodeJS fullstack Vagrant
 
-This repo is a bootstrap vagrant-based project using Node.js and MongoDB. 
-
-By default, it uses the precise32 vagrant base box. To start your project, complete the following steps:
+To start your project, complete the following steps:
 
 *Download and install vagrant, if you haven't already (http://downloads.vagrantup.com/)*
 
-    vagrant box add base http://files.vagrantup.com/precise32.box
-    git clone https://github.com/cacois/vagrant-node-mongo.git
-    cd vagrant-node-mongo
+    git clone https://github.com/jrmbrgs/mean.git
+    cd mean
     vagrant up
 
-Wait a few moments while your VM is powered on and configured. Now you can access your VM using
+Wait for your VM to switch on
 
     vagrant ssh
-    cd app
-    node app
+    cd /app
+    node server.js
 
-Now you can bring up your local browser and browse to http://localhost:3000 to see your Node app in action!
+On your local web browser : http://localhost:8084 
