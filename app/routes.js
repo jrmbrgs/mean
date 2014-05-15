@@ -1,54 +1,46 @@
 /// Models
-var winston=    require('winston');
-require('./dbals/mongoose');
-var todo_md = require('./models/todo');
+var winston=    require( 'winston');
+require( './dbals/mongoose');
+var todo_dm= require( './domains/todo');
+var todo_md= require( './models/todo');
 
-module.exports = function(app) {
-    app.get('/api/todo', function(req, res) {
-        winston.log('info', 'Fetching all todos...');
-        todo_md.find({},null,null,function(err, todos) {
-            if(err){
-                res.send(err);
-            }
-            winston.log('info', todos.length);
-            res.json(todos);
+module.exports= function( app){
+    var todo= new todo_dm();
+
+    app.get( '/api/todos', function( req, res){
+        todo.get( function(err, todo_xs){
+            if(err) res.send(err);
+            res.json(todo_xs);
         });
     });
-    app.post('/api/todo', function(req, res) {
-        winston.log('info', 'Create todo : ' + req.body.what);
-        todo_md.create({
-            what : req.param('what'),
-        	done : false
-        }, function(err, todo) {
-        	if(err){
-        		res.send(err);
-            }
-        	todo_md.find(function(err, todos) {
-        		if(err){
-        			res.send(err);
-                }
-        		res.json(todos);
-        	});
+
+    app.get( '/api/todos/not_done', function( req, res){
+        todo.get_not_done( function(err, todo_xs){
+            if(err) res.send(err);
+            res.json(todo_xs);
         });
     });
-    app.delete('/api/todo/:todo_id', function(req, res) {
+
+    app.post('/api/todos', function( req, res){
+        todo.create( req.body, function( err){
+            if( err) res.send( err);
+        });
+    });
+
+    app.put( '/api/todos/:todo_id', function( req, res){
+        todo.update(req.params.todo_id, req.param('is_done'), function (err){
+            if (err) return res.send(err);
+        });
+    });
+
+    app.delete('/api/todos/:todo_id', function(req, res){
         winston.log('info', 'Remove todo : ' + req.params.todo_id);
-        todo_md.remove({
-        	_id : req.params.todo_id
-        }, function(err, todo){
-        	if(err){
-        		res.send(err);
-            }
-        	todo_md.find(function(err, todos){
-        		if(err){
-        			res.send(err);
-                }
-        		res.json(todos);
-        	});
+        todo.delete( req.params.todo_id, function( err){
+            if (err) return res.send(err);
         });
     });
 
-    app.get('*', function(req, res) {
+    app.get('*', function(req, res){
 		res.sendfile('./www/index.html');
     });
 }

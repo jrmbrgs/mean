@@ -1,14 +1,20 @@
 angular.module('todo_srv', [])
-	.factory('todo_fact', function($http) {
+	.factory('todo_fact', function($http){
 		return {
-			get : function() {
-				return $http.get('/api/todo');
+			get : function( hide_done){
+                if( hide_done) return $http.get('/api/todos/not_done');
+				return $http.get('/api/todos');
 			},
-			create : function(todo_x) {
-				return $http.post('/api/todo', todo_x);
+			create : function(todo_x){
+				var post_x = $http.post('/api/todos', todo_x);
+				return $http.get('/api/todos');
 			},
-			delete : function(id) {
-				return $http.delete('/api/todo/' + id);
+			update : function(id, is_done){
+				return $http.put('/api/todos/'+id, { 'is_done' : is_done});
+			},
+			delete : function(id){
+				$http.delete('/api/todos/' + id);
+				return $http.get('/api/todos');
 			}
 		}
 	});
