@@ -22,6 +22,28 @@ todo_dm.prototype.create = function ( x, callback){
     });
 }
 
+todo_dm.prototype.get_by_id = function ( id, callback){
+    winston.info('Fetching todo : %s', id);
+    model.find({_id:id}, null, null, function( err, xs){
+        if(err){
+            winston.error('Failed to fetch todo items : %s', err);
+            callback( err, null);
+        }
+        winston.info('Found %s item(s)', xs.length);
+        callback(null, xs);
+    });
+}
+todo_dm.prototype.get_by_category = function ( category, callback){
+    winston.info('Fetching todo : %s', category);
+    model.find({category:category}, null, null, function( err, xs){
+        if(err){
+            winston.error('Failed to fetch todo items : %s', err);
+            callback( err, null);
+        }
+        winston.info('Found %s item(s)', xs.length);
+        callback(null, xs);
+    });
+}
 todo_dm.prototype.get = function ( callback){
     winston.log('info', 'Fetching all todos...');
     model.find({}, null, null, function( err, xs){

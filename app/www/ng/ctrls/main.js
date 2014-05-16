@@ -1,11 +1,22 @@
 
 angular.module('todo_ctrl', [])
-    .controller('main_ctrl', function($scope, $http, $log, todo_fact) {
+    .controller('main_ctrl', function($scope, $http, $log, todo_fact, category_fact) {
         $scope.formData = {};
 
         todo_fact.get( false)
-            .success(function(data) {
-                $scope.todos = data;
+            .success(function( todo_xs) {
+                $scope.todos= todo_xs;
+            });
+        category_fact.get()
+            .success(function( category_xs) {
+                $scope.categories =  category_xs;
+                $scope.category_todo_xs = new Array();
+                category_xs.forEach( function (category_x){ 
+                    todo_fact.get_by_category( category_x.code)
+                        .success(function(data) {
+                            $scope.category_todo_xs[category_x.code] = data;
+                        });
+                });
             });
 
         $scope.get = function( hide_done){

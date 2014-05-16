@@ -9,7 +9,8 @@ var app = express();
 app.use(express.static(__dirname + '/www'));
 app.use(bodyParser());
 /// Routes
-require('./routes')(app);
+require('./routes/category')(app);
+require('./routes/todo')(app);
 
 l.log('info', 'Up !');
 app.listen(8083);
